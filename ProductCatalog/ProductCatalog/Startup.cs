@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProductCatalog.Services;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace ProductCatalog {
     public class Startup {
@@ -29,6 +32,13 @@ namespace ProductCatalog {
             } else {
                 app.UseExceptionHandler();
             }
+
+            var supportedCultures = new List<CultureInfo> { new CultureInfo("en") };
+            app.UseRequestLocalization(new RequestLocalizationOptions {
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures,
+                DefaultRequestCulture = new RequestCulture("en")
+            });
 
             app.UseStaticFiles();
 
